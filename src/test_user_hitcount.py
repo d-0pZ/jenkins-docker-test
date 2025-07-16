@@ -1,13 +1,11 @@
 import unittest
-from unittest.mock import patch
-
-# Mock for redis
-import mockredis
 import hitcount
 
 class HitCountTest(unittest.TestCase):
 
-    @patch('hitcount.r', mockredis.mock_strict_redis_client(host='0.0.0.0', port=6379, db=0))
+    def setUp(self):
+        hitcount.r.delete("user1")
+
     def testOneHit(self):
         # increase the hit count for user1
         hitcount.hit("user1")
